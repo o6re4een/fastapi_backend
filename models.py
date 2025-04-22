@@ -26,22 +26,27 @@ association_table = Table(
     Column("janre_id", ForeignKey("janres.id"), primary_key=True),
 )
 
+
 class Movie(Base):
     __tablename__ = "movies"
-    id=Column(Integer,primary_key=True,index=True)
-    name=Column(String)
-    release_year=Column(Integer)
-    janres: Mapped[List["Janre"]]= relationship(secondary=association_table, back_populates="movies")
-    duration_min=Column(Integer)
-    rating=Column(Float)
-    description=Column(String, nullable=True)
-    poster = Column(String)
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+    release_year = Column(Integer)
+    janres: Mapped[List["Janre"]] = relationship(
+        secondary=association_table, back_populates="movies"
+    )
+    duration_min = Column(Integer)
+    rating = Column(Float)
+    description = Column(String, nullable=True)
+    poster = Column(String, nullable=True)
     date_created = Column(String, default=datetime.now)
 
 
 class Janre(Base):
     __tablename__ = "janres"
-    id=Column(Integer,primary_key=True,index=True)
-    name=Column(String)
-    description=Column(String)
-    movies: Mapped[List[Movie]] = relationship(secondary=association_table, back_populates="janres")
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+    description = Column(String, nullable=True)
+    movies: Mapped[List[Movie]] = relationship(
+        secondary=association_table, back_populates="janres"
+    )
